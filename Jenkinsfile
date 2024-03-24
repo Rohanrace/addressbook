@@ -12,10 +12,6 @@ pipeline {
         choice(name:'APPVERSION',choices:['1.1','1.2','1.3'])
     }
 
-    environment{
-        PACKAGE_SERVER='ec2-user@172.31.32.154'
-    }
-
     stages {
         stage('Compile') {
             agent {label 'linux_slave1'}
