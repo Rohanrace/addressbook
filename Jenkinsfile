@@ -13,7 +13,7 @@ pipeline {
     }
 
     environment{
-        PACKAGE_SERVER='ec2-user@172.31.7.45'
+        PACKAGE_SERVER='ec2-user@172.31.32.154'
     }
 
     stages {
