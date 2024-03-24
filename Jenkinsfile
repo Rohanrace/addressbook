@@ -1,11 +1,9 @@
 pipeline {
     agent none
-
     tools {
         // Install the Maven version configured as "M3" and add it to the path.
         maven "mymaven"
     }
-
     parameters{
         string(name:'Env',defaultValue:'Test',description:'version to deploy')
         booleanParam(name:'executeTests',defaultValue: true,description:'decide to run tc')
@@ -14,7 +12,7 @@ pipeline {
 
     stages {
         stage('Compile') {
-            agent {label 'linux_slave1'}
+            agent {label 'linux_slave'}
             steps {
                echo "compiling the code ${params.APPVERSION}"
                sh 'mvn compile'
