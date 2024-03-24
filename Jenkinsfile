@@ -42,16 +42,4 @@ pipeline {
             }
         }
         }
-        stage('DEPLOY') {
-            input{
-                message "Select the PLATFFORM to deploy"
-                ok "PLATFORM Selected"
-                parameters{
-                    choice(name:'PLATFORM',choices:['EKS','ONPREM_K8s','SERVERS'])
-                }
-            }
-            steps {
-               echo "DEPLOY the code ${params.Env}"
-            }
-        }
     }
