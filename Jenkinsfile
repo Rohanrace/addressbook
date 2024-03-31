@@ -7,9 +7,8 @@ pipeline {
     }
     
     environment{
-        BUILD_SERVER_IP='ec2-user@172.31.33.147'
-        IMAGE_NAME='devopstrainer/java-mvn-privaterepos'
-        DEPLOY_SERVER_IP='ec2-user@172.31.37.50'
+        BUILD_SERVER_IP='ec2-user@172.31.91.225'
+        IMAGE_NAME='rohanrace/private_1'
     }
 
     stages {
@@ -47,32 +46,15 @@ pipeline {
                 script{
                      echo "Creating the docker image and Push to registry"
                 sshagent(['slave2']) {
-                withCredentials([usernamePassword(credentialsId: 'docker-hub', passwordVariable: 'password', usernameVariable: 'username')]) {
+                withCredentials([usernamePassword(credentialsId: 'Docker_hub', passwordVariable: 'password', usernameVariable: 'rohanrace')]) {
                 sh "scp -o StrictHostKeyChecking=no server-script.sh ${BUILD_SERVER_IP}:/home/ec2-user"
                 sh "ssh -o StrictHostKeyChecking=no ${BUILD_SERVER_IP} 'bash server-script.sh ${IMAGE_NAME} ${BUILD_NUMBER}'"
-                sh "ssh ${BUILD_SERVER_IP} sudo docker login -u ${username} -p ${password}"
+                sh "ssh ${BUILD_SERVER_IP} sudo docker login -u ${rohanrace} -p ${password}"
                 sh "ssh ${BUILD_SERVER_IP} sudo docker push ${IMAGE_NAME}:${BUILD_NUMBER}"
                 }
                 }             
                 }
             }            
         }
-         stage('Deploy the docker container on Test server') {
-            agent any
-            steps {            
-                script{
-                     echo "Deploy the container"
-                sshagent(['slave2']) {
-                withCredentials([usernamePassword(credentialsId: 'docker-hub', passwordVariable: 'password', usernameVariable: 'username')]) {
-                sh "ssh -o StrictHostKeyChecking=no ${DEPLOY_SERVER_IP} sudo yum install docker -y"
-                 sh "ssh -o StrictHostKeyChecking=no ${DEPLOY_SERVER_IP} sudo systemctl start docker"
-                sh "ssh ${DEPLOY_SERVER_IP} sudo docker login -u ${username} -p ${password}"
-                sh "ssh ${DEPLOY_SERVER_IP} sudo docker run -itd -P ${IMAGE_NAME}:${BUILD_NUMBER}"
-                }
-                }             
-                }
-            }            
-        }
-
     }
 }
