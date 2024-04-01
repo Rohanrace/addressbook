@@ -14,6 +14,7 @@ then
    git pull origin test1
 else
    git clone https://github.com/Rohanrace/addressbook.git
+   cd /home/ec2-user/addressbook
    git checkout test1
 fi
 
