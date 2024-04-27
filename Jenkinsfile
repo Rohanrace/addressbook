@@ -44,7 +44,7 @@ pipeline {
             agent any
             steps {             
                 script{
-                    sshagent(['slave2']) {
+                    sshagent(['slave21']) {
                     //echo "Creating the package"
                    //sh "mvn package"
                     withCredentials([usernamePassword(credentialsId: 'Docker_hub', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
