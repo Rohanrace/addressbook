@@ -12,7 +12,7 @@ then
    cd /home/ec2-user/addressbook
    git pull origin april-eks
 else
-   git clone https://github.com/rohanrace/addressbook.git
+   git clone https://github.com/Rohanrace/addressbook.git
    cd addressbook
    git checkout april-eks
 fi
