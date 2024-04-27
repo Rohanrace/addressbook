@@ -103,11 +103,11 @@ pipeline {
                 sh 'aws --version'
                 sh 'aws configure set aws_access_key_id ${ACCESS_KEY}'
                 sh 'aws configure set aws_secret_access_key ${SECRET_ACCESS_KEY}'
-                sh 'aws eks update-kubeconfig --region ap-south-1 --name eksdemo1'
                 sh 'curl -o kubectl https://amazon-eks.s3-us-west-2.amazonaws.com/1.14.6/2019-08-22/bin/linux/amd64/kubectl'
                 sh 'chmod +x ./kubectl'
                 sh 'mkdir -p $HOME/bin && cp ./kubectl $HOME/bin/kubectl && export PATH=$HOME/bin:$PATH'
-                sh '/usr/local/bin/kubectl get nodes'
+                sh 'aws eks update-kubeconfig --region ap-south-1 --name eksdemo1'
+                sh 'kubectl get nodes'
                 sh 'envsubst < k8s-manifests/java-mvn-app.yml |  /usr/local/bin/kubectl apply -f -'
                 sh '/usr/local/bin/kubectl get all'
             }
