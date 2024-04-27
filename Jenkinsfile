@@ -6,7 +6,7 @@ pipeline {
         maven "mymaven"
     }
     environment{
-        BUILD_SERVER='ec2-user@172.31.39.25'
+        BUILD_SERVER='ec2-user@172.31.92.31'
         IMAGE_NAME='rohanrace/private_1'
         //DEPLOY_SERVER='ec2-user@172.31.14.15'
         ACCESS_KEY=credentials('ACCESS_KEY')
