@@ -6,8 +6,8 @@ pipeline {
         maven "mymaven"
     }
     environment{
-        BUILD_SERVER='ec2-user@172.31.38.236'
-        IMAGE_NAME='devopstrainer/java-mvn-privaterepos'
+        BUILD_SERVER='ec2-user@172.31.39.25'
+        IMAGE_NAME='rohanrace/private_1'
         //DEPLOY_SERVER='ec2-user@172.31.14.15'
         ACCESS_KEY=credentials('ACCESS_KEY')
         SECRET_ACCESS_KEY=credentials('SECRET_ACCESS_KEY')
@@ -103,7 +103,7 @@ pipeline {
                 sh 'aws --version'
                 sh 'aws configure set aws_access_key_id ${ACCESS_KEY}'
                 sh 'aws configure set aws_secret_access_key ${SECRET_ACCESS_KEY}'
-                sh 'aws eks update-kubeconfig --region ap-south-1 --name myeks1'
+                sh 'aws eks update-kubeconfig --region ap-south-1 --name eksdemo1'
                 sh '/usr/local/bin/kubectl get nodes'
                 sh 'envsubst < k8s-manifests/java-mvn-app.yml |  /usr/local/bin/kubectl apply -f -'
                 sh '/usr/local/bin/kubectl get all'
