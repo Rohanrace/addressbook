@@ -42,7 +42,7 @@ pipeline {
             sshagent(['slave-tf2']) {
         withCredentials([usernamePassword(credentialsId: 'Docker_hub', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
                      echo "PACKAGING THE CODE"
-                     sh "scp -o StrictHostKeyChecking=no server-script.sh ${DEV_SERVER_IP}:/home/ec2-user"
+                     sh "scp -o StrictHostKeyChecking=no -r server-script.sh ${DEV_SERVER_IP}:/home/ec2-user"
                      sh "ssh -o StrictHostKeyChecking=no ${DEV_SERVER_IP} 'bash ~/server-script.sh ${IMAGE_NAME} ${BUILD_NUMBER}'"
                     //sh "ssh ${DEV_SERVER_IP} sudo docker build -t  ${IMAGE_NAME} /home/ec2-user/addressbook"
                     sh "ssh ${DEV_SERVER_IP} sudo docker login -u $USERNAME -p $PASSWORD"
