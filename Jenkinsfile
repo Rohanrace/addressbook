@@ -6,7 +6,7 @@ pipeline {
     // }
      environment{
         IMAGE_NAME='devopstrainer/java-mvn-privaterepos'
-        DEV_SERVER_IP='ec2-user@172.31.0.193'
+        DEV_SERVER_IP='rohan@172.31.0.193'
         APP_NAME='java-mvn-app'
     }
     stages {
@@ -42,9 +42,9 @@ pipeline {
             sshagent(['slave-tf2']) {
         withCredentials([usernamePassword(credentialsId: 'Docker_hub', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
                      echo "PACKAGING THE CODE"
-                     sh "scp -o StrictHostKeyChecking=no -r server-script.sh ${DEV_SERVER_IP}:/home/ec2-user"
+                     sh "scp -o StrictHostKeyChecking=no -r server-script.sh ${DEV_SERVER_IP}:/home/rohan"
                      sh "ssh -o StrictHostKeyChecking=no ${DEV_SERVER_IP} 'bash ~/server-script.sh ${IMAGE_NAME} ${BUILD_NUMBER}'"
-                    //sh "ssh ${DEV_SERVER_IP} sudo docker build -t  ${IMAGE_NAME} /home/ec2-user/addressbook"
+                    //sh "ssh ${DEV_SERVER_IP} sudo docker build -t  ${IMAGE_NAME} /home/rohan/addressbook"
                     sh "ssh ${DEV_SERVER_IP} sudo docker login -u $USERNAME -p $PASSWORD"
                     sh "ssh ${DEV_SERVER_IP} sudo docker push ${IMAGE_NAME}:${BUILD_NUMBER}"
                     }
@@ -82,8 +82,8 @@ pipeline {
                echo "${EC2_PUBLIC_IP}"
                sshagent(['slave-tf2']) {
                 withCredentials([usernamePassword(credentialsId: 'docker-hub', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
-                      sh "ssh -o StrictHostKeyChecking=no ec2-user@${EC2_PUBLIC_IP} sudo docker login -u $USERNAME -p $PASSWORD"
-                      sh "ssh ec2-user@${EC2_PUBLIC_IP} sudo docker run -itd -p 8080:8080 ${IMAGE_NAME}:${BUILD_NUMBER}"
+                      sh "ssh -o StrictHostKeyChecking=no rohan@${EC2_PUBLIC_IP} sudo docker login -u $USERNAME -p $PASSWORD"
+                      sh "ssh rohan@${EC2_PUBLIC_IP} sudo docker run -itd -p 8080:8080 ${IMAGE_NAME}:${BUILD_NUMBER}"
                       
                 }
             }
