@@ -80,7 +80,7 @@ pipeline {
                sleep(time: 90, unit: "SECONDS")
                echo "Deploying the app to ec2-instance provisioned bt TF"
                echo "${EC2_PUBLIC_IP}"
-               sshagent(['slave-tf2']) {
+               sshagent(['slavetf3']) {
                 withCredentials([usernamePassword(credentialsId: 'docker-hub', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
                       sh "ssh -o StrictHostKeyChecking=no rohan@${EC2_PUBLIC_IP} sudo docker login -u $USERNAME -p $PASSWORD"
                       sh "ssh rohan@${EC2_PUBLIC_IP} sudo docker run -itd -p 8080:8080 ${IMAGE_NAME}:${BUILD_NUMBER}"
