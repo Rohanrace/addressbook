@@ -39,7 +39,7 @@ pipeline {
             agent any
            steps{
             script{
-            sshagent(['slave-tf2']) {
+            sshagent(['slavetf3']) {
         withCredentials([usernamePassword(credentialsId: 'Docker_hub', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
                      echo "PACKAGING THE CODE"
                      sh "scp -r server-script.sh ${DEV_SERVER_IP}:/tmp"
