@@ -5,7 +5,7 @@ pipeline {
     //     maven 'mymaven'
     // }
      environment{
-        IMAGE_NAME='devopstrainer/java-mvn-privaterepos'
+        IMAGE_NAME='rohanrace/private_1'
         DEV_SERVER_IP='ec2-user@172.31.39.25'
         APP_NAME='java-mvn-app'
     }
